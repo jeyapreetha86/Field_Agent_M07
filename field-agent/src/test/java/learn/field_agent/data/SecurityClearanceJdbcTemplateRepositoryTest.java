@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class SecurityClearanceJdbcTemplateRepositoryTest {
@@ -23,7 +25,7 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldFindById() {
+    void test1ShouldFindById() {
         SecurityClearance secret = new SecurityClearance(1, "Secret");
         SecurityClearance topSecret = new SecurityClearance(2, "Top Secret");
 
@@ -36,4 +38,32 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
         actual = repository.findById(3);
         assertEquals(null, actual);
     }
+
+    @Test
+    void test2ShouldFindAll(){
+        List<SecurityClearance> actual = repository.findAll();
+        assertEquals(2, actual.size());
+    }
+
+    @Test
+    void test3ShouldAdd(){
+        SecurityClearance confidential = new SecurityClearance();
+        confidential.setName("Confidential");
+        SecurityClearance actual = repository.add(confidential);
+        confidential.setSecurityClearanceId(3);
+        assertEquals(confidential, actual);
+    }
+
+    @Test
+    void test4ShouldUpdate(){
+        SecurityClearance secret = new SecurityClearance(1, "SecretService");
+        assertTrue(repository.update(secret));
+    }
+
+    @Test
+    void test5ShouldDelete(){
+        assertTrue(repository.deleteById(3));
+    }
+
+
 }

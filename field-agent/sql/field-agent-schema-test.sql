@@ -100,13 +100,24 @@ delimiter //
 create procedure set_known_good_state()
 begin
 
-	delete from location;
+	delete from alias;
+    alter table alias auto_increment = 1;
+    delete from location;
     alter table location auto_increment = 1;
     delete from agency_agent;
-	delete from agency;
+    delete from agency;
 	alter table agency auto_increment = 1;
     delete from agent;
     alter table agent auto_increment = 1;
+    delete from security_clearance;
+    alter table security_clearance auto_increment = 1;
+    
+    
+    
+        -- data
+insert into security_clearance values
+	(1, 'Secret'),
+    (2, 'Top Secret');
     
     insert into agency(agency_id, short_name, long_name) values
         (1, 'ACME', 'Agency to Classify & Monitor Evildoers'),
@@ -146,12 +157,14 @@ begin
     inner join agent
     where agent.agent_id not in (6, 8)
     and agency.agency_id != 2;
+    
+
+    
+ insert into alias 
+(`name`, persona, agent_id) 
+select first_name `name`, last_name persona, 8-agent_id agent_id  from agent where agent_id!=8;
 
 end //
 -- 4. Change the statement terminator back to the original.
 delimiter ;
 
--- data
-insert into security_clearance values
-	(1, 'Secret'),
-    (2, 'Top Secret');

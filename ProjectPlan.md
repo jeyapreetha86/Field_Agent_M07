@@ -29,5 +29,16 @@ Field Agent API is an application that maintains the details of Agency, Agents, 
 
 ### CRUD for agent aliases
 #### To Do
+- Create full HTTP CRUD for alias .
+
+#### Steps
+- Create the interface AliasRepository.java
+- Create AliasMapper.java to serialize the the data read
+- Create AliasJDBCTemplateRepository.java by implementing AliasRepository interface
+- Add findAll, findById, add, update, delete methods
+- Create AliasService.java with findAll, findById, add, update, delete methods and implement validations on add, update, delete methods
+- Create AliasController.java with GET, POST, PUT and DELETE endpoint methods.
+
+
 
 
